@@ -1,0 +1,12 @@
+print("
+Энэ файлд факториал функцийн тодорхойлолт бий.
+")
+
+factorial = func(n)
+    value = 1
+    while n>0
+	value *= n
+	n -= 1
+    end
+    return(value)
+end
