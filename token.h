@@ -45,52 +45,49 @@
 #include "litelang.h"
 
 enum {
-    IF_B = 0,
-    WHILE_B,
-    FUNC_B,
-    CLASS_B
+  IF_B = 0,
+  WHILE_B,
+  FUNC_B
 };
 
 enum {
-    BOOL_T = 0,	// true, false
-    INT_T,
-    DOUBLE_T,
-    SYMBOL_T,
-    LIST_T,
-    STR_T,
+  BOOL_T = 0,   // true, false
+  BBYTE_T,
+  XBYTE_T,
+  INT_T,
+  DOUBLE_T,
+  SYMBOL_T,
 
-    OP_T,	// + - * / %
-    BITOP_T,	// & | ~ ^ >> <<
-    LOGIC_T,	// < > <= >= == != in (support with LIST_T) not and or xor
-    ASSIGN_T,	// = += -= *= /= %=
-    FLOW_T,	// if elif else while continue break end
+  OP_T,         // + - * / %
+  BITOP_T,      // & | ~ ^ >> <<
+  LOGIC_T,	    // < > <= >= == != not and or xor
+  ASSIGN_T,	    // = += -= *= /= %=
+  FLOW_T,	      // if elif else while continue break end
 
-    FUNC_T,    
-    COMMA_T,	// ,
-    PAREN_T,	// ( )
-
-    COLON_T	// :
+  FUNC_T,    
+  COMMA_T,	    // ,
+  PAREN_T 	    // ( )
 };
 
 enum {
-    false = 0,
-    true
+  false = 0,
+  true
 };
 
 char * slist_print_token(void * obj);
 
 void token_parse(
-    file_desc * desc,
-    int tok,
-    char ** temp,
-    int * type,
-    slist * tok_queue);
+  file_desc * desc,
+  int tok,
+  char ** temp,
+  int * type,
+  slist * tok_queue);
 
 void tokenize(
-    file_desc * desc,
-    char ** temp,
-    int * type,
-    slist * tok_queue);
+  file_desc * desc,
+  char ** temp,
+  int * type,
+  slist * tok_queue);
 
 #endif	/* TOKEN_H */
 

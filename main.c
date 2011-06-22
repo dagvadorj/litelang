@@ -43,24 +43,24 @@
 
 int main(int argc, char ** argv) {
 
-    FILE * init_file;
-    slist * sym_table;
-    token * ret;
-    
-    char * file_name = "stdin";
+  FILE * init_file;
+  slist * sym_table;
+  token * ret;
 
-    if (argc < 2) {
-        printf(":> Welcome to litelang, an interpreted programming language.\n");
-        printf(":> Running in interactive mode.\n");
-        init_file = stdin;
-    } else {
-        init_file = fopen(argv[1], "r");
-	file_name = argv[1];
-    }
+  char * file_name = "stdin";
 
-    sym_table = slist_init();
+  if (argc < 2) {
+    printf(":> Welcome to litelang, an interpreted programming language.\n");
+    printf(":> Running in interactive mode.\n");
+    init_file = stdin;
+  } else {
+    init_file = fopen(argv[1], "r");
+    file_name = argv[1];
+  }
 
-    liten(init_file, file_name, sym_table, &ret);
-    printf("\n");
-    return 0;
+  sym_table = slist_init();
+
+  liten(init_file, file_name, sym_table, &ret);
+  printf("\n");
+  return 0;
 }

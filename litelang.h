@@ -42,32 +42,32 @@
 #ifndef LITELANG_H
 #define LITELANG_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <stdio.h>  // printf, sprintf
+#include <stdlib.h> // NULL, free, malloc
+#include <string.h> // strlen, strcmp
 #include "slist.h"
 #define MAX_STR 20
 
 typedef struct block_s {
-    int type;
-    long s_offset;
-    int value;
-    int repeat;
+  int type;
+  long s_offset;
+  int value;
+  int repeat;
 } block;
 
 typedef struct {
-    FILE * file;
-    char * name;
-    int line;
+  FILE * file;
+  char * name;
+  int line;
 } file_desc;
 
 typedef struct token_s {
-    int type;
-    char * obj;
-    file_desc * desc;
-    long s_offset;
-    int num_params; // for function
-    slist * params;
+  int type;
+  char * obj;
+  file_desc * desc;
+  long s_offset;
+  int num_params; // for function
+  slist * params;
 } token;
 
 void liten(FILE * in, char * file_name, slist * sym_table, token ** ret);

@@ -5,7 +5,7 @@ compile: slist.o token.o exec.o liten.o main.o
 
 slist.o: slist.c
 	gcc -c slist.c
-	
+
 token.o: token.c
 	gcc -c token.c
 

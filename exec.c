@@ -170,10 +170,11 @@ int token_type(file_desc * desc, token * tok) {
 	int type = tok->type;
 	switch (type) {
 	case BOOL_T:
+	case BBYTE_T:
+	case XBYTE_T:
 	case INT_T:
 	case DOUBLE_T:
 	case SYMBOL_T:
-	case STR_T:
 		return Operand;
 		break;
 	case OP_T:
@@ -276,6 +277,43 @@ void exec_op(file_desc * desc, slist * out_queue, token * tok, slist * sym_table
 }
 
 void exec_bitop(file_desc * desc, slist * out_queue, token * tok, slist * sym_table) {
+	
+	token * iter_tok1, * iter_tok2, * res_tok;
+	symbol * sym;
+
+	if ((iter_tok2 = (token *) slist_pop(out_queue)) == NULL)
+		lite_error(desc, "Not enough arguments");		
+  if ((iter_tok1 = (token *) slist_pop(out_queue)) == NULL)
+		lite_error(desc, "Not enough arguments");
+
+	if (iter_tok1->type == SYMBOL_T) {
+		if ((sym = fetch_sym(sym_table, iter_tok1->obj)) == NULL)
+			lite_error(desc, "Symbol doesn't exist");
+		else {
+			free(iter_tok1);
+			iter_tok1 = ((symbol *) sym)->tok;
+		}
+	}
+
+	if (iter_tok2->type == SYMBOL_T) {
+		if ((sym = fetch_sym(sym_table, iter_tok2->obj)) == NULL)
+			lite_error(desc, "Symbol doesn't exist");
+		else {
+			free(iter_tok2);
+			iter_tok2 = ((symbol *) sym)->tok;
+		}
+	}
+	
+	res_tok = malloc(sizeof(token));
+	res_tok->type = INT_T;
+	res_tok->obj = malloc(sizeof(char *));
+	
+	if (strcmp("<<", tok->obj) == 0) {
+	  sprintf(res_tok->obj, "%d", atoi(iter_tok1->obj) << atoi(iter_tok2->obj));
+	} else if (strcmp("<<", tok->obj) == 0) {
+	  sprintf(res_tok->obj, "%d", atoi(iter_tok1->obj) << atoi(iter_tok2->obj));
+	}
+	slist_push(out_queue, res_tok);
 }
 
 void exec_flow(file_desc * desc, slist * out_queue, token * tok, slist * sym_table,
@@ -635,28 +673,28 @@ void exec_func(file_desc * desc, slist * out_queue, token * tok, slist * sym_tab
 		}
 		printf("\n");
 	} else if (strcmp("input", tok->obj) == 0) {
-		char * temp_str = malloc(sizeof(char)*MAX_STR);
-		int temp_size= MAX_STR;
-		getline(&temp_str, &temp_size, stdin);
-		token * temp = malloc(sizeof(token));
-		temp->type = STR_T;
-		temp->obj = temp_str;
-		slist_push(out_queue, temp);
+		// char * temp_str = malloc(sizeof(char)*MAX_STR);
+		// int temp_size= MAX_STR;
+		// getline(&temp_str, &temp_size, stdin);
+		// token * temp = malloc(sizeof(token));
+		// temp->type = STR_T;
+		// temp->obj = temp_str;
+		// slist_push(out_queue, temp);
 	} else if (strcmp("list", tok->obj) == 0) {
 		slist * list = slist_init();
 		token * temp = (token *) slist_dequeue(out_queue);
 		while (temp != NULL) {
-			// TODO: Make list cpy
+			// TODO: Make list copy
 			slist_enqueue(list, temp);
 			temp = (token *) slist_dequeue(out_queue);
 		}
 	} else if (strcmp("include", tok->obj) == 0) {
 		if ((iter_tok = slist_dequeue(out_queue)) != NULL) {
-			if (iter_tok->type == SYMBOL_T) {
+			/* if (iter_tok->type == SYMBOL_T) {
 				if ((iter_sym = fetch_sym(sym_table, iter_tok->obj)) == NULL)
 					lite_error(desc, "Symbol doesn't exist");
 				iter_tok = iter_sym->tok;
-			}
+			} */
 			FILE * temp_file = fopen(iter_tok->obj, "r");
 			liten(temp_file, iter_tok->obj, sym_table, ret);
 			fclose(temp_file);
@@ -754,9 +792,11 @@ void exec(file_desc * desc, slist * out_queue, token * tok, slist * sym_table, s
 	}
 }
 
-// Transforms to Reverse Polish Notation while 
-// implementing Djikstra's Shunting-yard algorithm
-// for execution
+/* Transforms to Reverse Polish Notation 
+ * using Djikstra's Shunting-yard algorithm
+ * for execution 
+ */
+ 
 void rpn(file_desc * desc, slist * tok_queue, slist * sym_table, slist * block_stack, token ** ret) {
 
 	slist * op_stack = slist_init();
@@ -787,7 +827,7 @@ void rpn(file_desc * desc, slist * tok_queue, slist * sym_table, slist * block_s
 			slist_push(op_stack, tok);
 			iter_node = slist_get(tok_queue, 1);
 			iter_tok = (iter_node != NULL) ? (token *) iter_node->obj : NULL;
-			if (iter_tok == NULL) lite_error(desc, "Syntax error");
+			if (iter_tok == NULL) lite_error(desc, "Syntax error: exec.c:828");
 			
 			count_param = malloc(sizeof(int));
 			*count_param = 1;

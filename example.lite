@@ -1,32 +1,23 @@
-print("Тавтай морил!")
-
-include("factorial.lite")
-
 a=7
 b=4
-print("a=",a,", b=",b)
-print("a+b=", a+b)
-print("a/b=", a/b)
-print("a%b=", a%b)
-print("a!=",factorial(a))
-print(8,"!=",factorial(8))
+print(a)
+print(b)
+print(a+b, a, b)
+print(a/b)
+print(a%b)
 
 gcd = func(x,y)
-    while y > 0
-	z = y
-	y = x%y
-	x = z
-    end
-    return(x)
+  while y > 0
+    z = y
+    y = x%y
+    x = z
+  end
+  return(x)
 end
 
-print("15,12 хоёр тооны хамгийн их ерөнхий хуваагч бол: ",gcd(15,12))
+print(gcd(12,15))
+print(4-5 == 0-1)
+print(9<<2)
 
-print("Таны нэр: ")
-a = input()
-print("Сайн уу, ", a)
-
-print("
-litelang програмын хэл нь одоогийн байдлаар 
-альфа шатандаа байна.
-")
+a = 0xdd
+print(a)
