@@ -1,3 +1,5 @@
+(Both the language and this document are drafts)
+
 litelang is an interpreted programming language which is supposed to be primitive in design and in implementation.
 
 == Features ==

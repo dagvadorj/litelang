@@ -64,7 +64,7 @@ enum {
   ASSIGN_T,	    // = += -= *= /= %=
   FLOW_T,	      // if elif else while continue break end
 
-  FUNC_T,    
+  FUNC_T,       // return() is built-in
   COMMA_T,	    // ,
   PAREN_T 	    // ( )
 };
