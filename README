@@ -1,0 +1,26 @@
+litelang is an interpreted programming language which is supposed to be primitive in design and in implementation.
+
+== Features ==
+
+=== Data types ===
+
+* Boolean (BOOL_T)
+* Byte (BBYTE_T and XBYTE_T)
+* Integer (INT_T)
+* Double (DOUBLE_T)
+* Symbol (SYMBOL_T)
+
+=== Blocks ===
+
+* If ('if', 'elif', 'else')
+* While (with 'break' and 'continue' support)
+* Function
+
+=== Operations ===
+
+* Arithmetic (+, -, *, /, %)
+* Bit (&, |, ~, ^, >>, <<)
+* Logic (<, >, <=, >=, ==, !=, not, and, or, xor)
+* Assign (=, +=, -=, *=, /=, %=)
+
+
